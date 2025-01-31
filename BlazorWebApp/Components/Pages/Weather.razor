@@ -1,0 +1,107 @@
+﻿@page "/weather"
+@inject AuthenticationStateProvider GetAuthenticationStateAsync
+@inject HttpContextService HttpContextService
+@using System.Security.Claims
+@using BlazorWebApp.Classes
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.Authorization
+@attribute [StreamRendering]
+@attribute [Authorize]
+<PageTitle>Weather</PageTitle>
+
+<h1>Weather</h1>
+
+<p>This component demonstrates showing data.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th aria-label="Temperature in Celsius">Temp. (C)</th>
+                <th aria-label="Temperature in Farenheit">Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <b>User name @name</b><br/>
+    @foreach (var claim in userClaims)
+    {
+        if (claim.Type == "LocationGroups")
+        {
+             <b>@claim.Value.Replace("/", "")</b><br/>
+        }
+    }
+    <b> the Id token:</b><textarea>@id</textarea><br/>
+    <b> the access token:</b><textarea>@access</textarea><br/>
+    <b> the refresh token:</b><textarea>@refresh</textarea><br/>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+    private string name = string.Empty;
+    private List<Claim> userClaims;
+    private string id = string.Empty;
+    private string access = string.Empty;
+    private string refresh = string.Empty;
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = startDate.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        }).ToArray();
+        var authstate = await GetAuthenticationStateAsync.GetAuthenticationStateAsync();
+        var user = authstate.User; 
+        name = user.Identity?.Name;
+        
+        userClaims = user.Claims.ToList();
+        foreach (var claim in userClaims)
+        {
+            if (claim.Type == "LocationGroups")
+            {
+                Console.WriteLine(claim.Value);
+            }
+            
+            if (claim.Type == "auth_time")
+            {
+                var dateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(claim.Value)).UtcDateTime;
+                Console.WriteLine(dateTime + " Current time is " + DateTime.UtcNow); // Output: 2025-01-17T17:32:05Z
+            }
+        }
+
+         id = await HttpContextService.GetIdToken();
+         access = await HttpContextService.GetAccessToken();
+         refresh = await HttpContextService.GetRefreshToken();
+    }
+
+    private class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}

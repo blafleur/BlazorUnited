@@ -1,0 +1,27 @@
+@page "/Test"
+@using BlazorWebApp.Classes
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+@using Microsoft.AspNetCore.Authentication.OpenIdConnect
+@using Microsoft.AspNetCore.Http
+@inject NavigationManager NavigationManager
+@inject HttpContextService service
+@inject IHttpContextAccessor context
+@rendermode @(new InteractiveServerRenderMode(false))
+<h3>Test</h3>
+<button @onclick="click">Logout</button>
+@code {
+
+    private async Task click()
+    {
+        var id = await service.GetRefreshToken();
+      //  await context.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+      //  await context.HttpContext.SignOutAsync(OpenIdConnectDefaults.AuthenticationScheme);
+        
+        var url = $"http://localhost:8080/realms/aspnet/protocol/openid-connect/logout?id_token_hint={id}&post_logout_redirect_uri=https://localhost:7093/";
+        //context.Response.Redirect(url);
+        NavigationManager.NavigateTo(url);
+        
+    }
+
+}
