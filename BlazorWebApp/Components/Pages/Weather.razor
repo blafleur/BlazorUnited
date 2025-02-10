@@ -1,6 +1,7 @@
 ﻿@page "/weather"
 @inject AuthenticationStateProvider GetAuthenticationStateAsync
 @inject HttpContextService HttpContextService
+@inject MyStatus MyStatus
 @using System.Security.Claims
 @using BlazorWebApp.Classes
 @using Microsoft.AspNetCore.Authorization
@@ -12,6 +13,7 @@
 <h1>Weather</h1>
 
 <p>This component demonstrates showing data.</p>
+<h3>Background status = @status</h3>
 
 @if (forecasts == null)
 {
@@ -54,12 +56,20 @@ else
 }
 
 @code {
+    private string status;
     private WeatherForecast[]? forecasts;
     private string name = string.Empty;
     private List<Claim> userClaims;
     private string id = string.Empty;
     private string access = string.Empty;
     private string refresh = string.Empty;
+
+    private void GetStatus()
+    {
+        status = MyStatus.Data;
+        StateHasChanged();
+    }
+
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
@@ -90,13 +100,15 @@ else
                 var dateTime = DateTimeOffset.FromUnixTimeSeconds(long.Parse(claim.Value)).UtcDateTime;
                 Console.WriteLine(dateTime + " Current time is " + DateTime.UtcNow); // Output: 2025-01-17T17:32:05Z
             }
+
+            status = MyStatus.Data;
         }
 
          id = await HttpContextService.GetIdToken();
          access = await HttpContextService.GetAccessToken();
          refresh = await HttpContextService.GetRefreshToken();
     }
-
+    
     private class WeatherForecast
     {
         public DateOnly Date { get; set; }

@@ -129,6 +129,9 @@ builder.Services.AddAuthentication(
 
 builder.Services.ConfigureCookieOidcRefresh(CookieAuthenticationDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme);
 builder.Services.AddAuthorization();
+builder.Services.AddHostedService<MyBackgroundService>();
+builder.Services.AddSingleton<MyBackgroundService>();
+builder.Services.AddSingleton<MyStatus>();
 var app = builder.Build();
 // Use the middleware
 app.UseMiddleware<LogoutMiddleware>();

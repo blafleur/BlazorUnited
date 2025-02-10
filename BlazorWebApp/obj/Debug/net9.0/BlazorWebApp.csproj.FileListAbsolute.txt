@@ -7,6 +7,7 @@
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/BlazorWebApp.runtimeconfig.json
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/BlazorWebApp.dll
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/BlazorWebApp.pdb
+/Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/IdentityModel.dll
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/Microsoft.IdentityModel.Abstractions.dll
 /Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/Microsoft.IdentityModel.JsonWebTokens.dll
@@ -21,6 +22,7 @@
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.AssemblyInfo.cs
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.csproj.CoreCompileInputs.cache
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.MvcApplicationPartsAssemblyInfo.cache
+/Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.sourcelink.json
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/scopedcss/Components/Layout/MainLayout.razor.rz.scp.css
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/scopedcss/Components/Layout/NavMenu.razor.rz.scp.css
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/scopedcss/bundle/BlazorWebApp.styles.css
@@ -87,4 +89,3 @@
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.pdb
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/BlazorWebApp.genruntimeconfig.cache
 /Users/Brian/BlazorUnited/BlazorWebApp/obj/Debug/net9.0/ref/BlazorWebApp.dll
-/Users/Brian/BlazorUnited/BlazorWebApp/bin/Debug/net9.0/IdentityModel.dll
